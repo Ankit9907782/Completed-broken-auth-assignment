@@ -1,0 +1,35 @@
+====================
+1. LOGIN
+====================
+i. Command:
+   curl -c cookies.txt -X POST http://localhost:3000/auth/login -H "Content-Type: application/json" -d '{"email":"ankit@gmail.com","password":"123456"}'
+
+ii. Output:
+   {"message":"OTP sent","loginSessionId":"phqng"}
+
+====================
+2. VERIFY OTP
+====================
+i. Command:
+   curl.exe -b cookies.txt -X POST http://localhost:3000/auth/verify-otp -H "Content-Type: application/json" -d "{\"loginSessionId\":\"phqng\",\"otp\":\"811254\"}"
+
+ii. Output:
+   {"message":"OTP verified","sessionId":"phqng"}
+
+====================
+3. GET TOKEN
+====================
+i. Command:
+  curl -H "Authorization: Bearer phqng" -X POST http://localhost:3000/auth/token
+
+ii. Output:
+  {"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFua2l0QGdtYWlsLmNvbSIsInNlc3Npb25JZCI6IkJlYXJlciBwaHFuZyIsImlhdCI6MTc3MDkwNDkyNywiZXhwIjoxNzcwOTA1ODI3fQ.5fJ-s2pG6ATmPv6PAoKBZIaYyKjGlCqJ_flKASRc2tA","expires_in":900}
+
+====================
+4. PROTECTED ROUTE
+====================
+i. Command:
+   curl.exe -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFua2l0QGdtYWlsLmNvbSIsInNlc3Npb25JZCI6IkJlYXJlciBwaHFuZyIsImlhdCI6MTc3MDkwNDkyNywiZXhwIjoxNzcwOTA1ODI3fQ.5fJ-s2pG6ATmPv6PAoKBZIaYyKjGlCqJ_flKASRc2tA" http://localhost:3000/protected
+
+ii. Output: 
+   {"message":"Access granted","user":{"email":"ankit@gmail.com","sessionId":"Bearer phqng","iat":1770904927,"exp":1770905827},"success_flag":"FLAG-YW5raXRAZ21haWwuY29tX0NPTVBMRVRFRF9BU1NJR05NRU5U"}
